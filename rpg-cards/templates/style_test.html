@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_test.css') }}">
+    </head>
+    <body>
+        <div class="full-test">
+            {%- for i in range(14) -%}
+                <div class="color-test color-test-{{ i+1 }}">
+                    {%- for _ in range(30) -%}
+                        <div class="font-test">
+                            {# <span class="child-font-test child-font-test-small text"></span> #}
+                            <span class="child-font-test child-font-test-medium text"></span>
+                            {# <span class="child-font-test child-font-test-large text"></span> #}
+                            <span class="child-font-test child-font-test-extra-large text"></span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            // Janky 
+            document.querySelectorAll(".child-font-test").forEach(e => {
+                let rotation = -3 + 6 * Math.random();
+                e.style = `transform: rotate(${rotation}deg)`;
+            });
+        </script>
+    </body>
+</html>

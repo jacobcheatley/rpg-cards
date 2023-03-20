@@ -1,0 +1,64 @@
+@use "sass:map";
+
+// Colors
+$color-black: #000000;
+$color-white: #ffffff;
+// $color-red: #ff003e;
+$color-yellow: #ffe82c;
+// $color-green: #3eff00;
+// $color-cyan: #00e9ff;
+// $color-blue: #003eff;
+$color-magenta: #f13eb5;
+
+$colors-text: (
+    "black": $color-black,
+    "white": $color-white,
+);
+
+$colors-all: (
+    "black": $color-black,
+    "white": $color-white,
+    "yellow": $color-yellow,
+    "magenta": $color-magenta,
+);
+
+// Schemes
+$color-schemes: ();
+
+@function create-color-scheme($color-text, $color-accent, $color-background) {
+    $map: (
+        "text": $color-text,
+        "accent": $color-accent,
+        "background": $color-background
+    );
+
+    @return $map;
+}
+
+@each $color-text-name, $color-text in $colors-text {
+    @each $color-accent-name, $color-accent in $colors-all {
+        @if $color-text != $color-accent {
+            @each $color-background-name, $color-background in $colors-all {
+                $scheme-key: "#{$color-text-name}-#{$color-accent-name}-#{$color-background-name}";
+
+                $valid-combination: $color-accent != $color-background;
+                @if $valid-combination {
+                    // At least one of accent and background must be a standard text color
+                    $valid-combination: map-has-key($map: $colors-text, $key: $color-accent-name) or map-has-key($map: $colors-text, $key: $color-background-name);
+                    // @debug $scheme-key;
+                    // @debug map-has-key($map: $colors-text, $key: $color-accent-name);
+                    // @debug map-has-key($map: $colors-text, $key: $color-background-name);
+                    // @debug $valid-combination;
+                }
+
+                @if $valid-combination {
+                    $map: ();
+                    $map: map-merge($map, ($scheme-key: create-color-scheme($color-text, $color-accent, $color-background)));
+                    $color-schemes: map-merge($color-schemes, $map);
+                }
+            }
+        }
+    }
+}
+
+// @debug $color-schemes;

@@ -1,0 +1,28 @@
+@import 'imports/colors.scss';
+@import 'imports/fonts.scss';
+
+// Card Dimensions
+$card-width: 63mm;
+$card-height: 88mm;
+$card-border-color: $color-black;
+$card-border-radius: 2mm;
+$card-frame-inset: 1.5mm;
+
+.card {
+    width: $card-width;
+    height: $card-height;
+    border-radius: $card-border-radius;
+    background-color: $card-border-color;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.card-frame {
+    background-color: white;
+    position: absolute;
+    left: $card-frame-inset;
+    right: $card-frame-inset;
+    top: $card-frame-inset;
+    bottom: $card-frame-inset;
+    border-radius: $card-frame-inset;
+}
